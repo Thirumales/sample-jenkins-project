@@ -1,5 +1,5 @@
 pipeline {
-  agent { label 'linux' }
+  agent { label 'seed-job-agent' }
   options {
     buildDiscarder(logRotator(numToKeepStr: '5'))
   }
