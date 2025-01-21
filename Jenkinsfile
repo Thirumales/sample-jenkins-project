@@ -9,23 +9,39 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh 'docker build -t thirumaleshwara/dp-alpine:latest .' // Update Docker image name
+        script {
+          node {
+            sh 'docker build -t thirumaleshwara/dp-alpine:latest .' // Update Docker image name
+          }
+        }
       }
     }
     stage('Login') {
       steps {
-        sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+        script {
+          node {
+            sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+          }
+        }
       }
     }
     stage('Push') {
       steps {
-        sh 'docker push thirumaleshwara/dp-alpine:latest' // Update Docker image name
+        script {
+          node {
+            sh 'docker push thirumaleshwara/dp-alpine:latest' // Update Docker image name
+          }
+        }
       }
     }
   }
   post {
     always {
-      sh 'docker logout'
+      script {
+        node {
+          sh 'docker logout'
+        }
+      }
     }
   }
 }
